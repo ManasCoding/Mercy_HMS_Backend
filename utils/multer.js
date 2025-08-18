@@ -1,0 +1,20 @@
+import multer from "multer";
+import crypto from "crypto";
+import path from "path";
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/images/uploads')
+  },
+  filename: function (req, file, cb) {
+    crypto.randomBytes(64, function (err, buffer) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(buffer.toString("hex"));
+            const fn = buffer.toString("hex") + path.extname(file.originalname);
+            cb(null, fn);
+        }
+    });
+  }
+})
