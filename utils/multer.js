@@ -2,12 +2,19 @@ import multer from "multer";
 import crypto from "crypto";
 import path from "path";
 
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+
+
+
+
+    
+    console.log("hello");
     cb(null, './public/images/uploads')
   },
   filename: function (req, file, cb) {
-    crypto.randomBytes(64, function (err, buffer) {
+    crypto.randomBytes(12, function (err, buffer) {
         if (err) {
             console.log(err);
         } else {
@@ -18,3 +25,12 @@ const storage = multer.diskStorage({
     });
   }
 })
+
+const upload = multer({ storage: storage })
+export default upload
+// module.exports = upload
+
+
+
+
+

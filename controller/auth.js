@@ -3,6 +3,10 @@ import User from "../model/user.model.js";
 import { hashPassword } from "../utils/bcrypt.js";
 import { generateToken } from "../utils/jwt.js";
 import jsonwebtoken from "jsonwebtoken";
+// import uploads from "../utils/multer.js";
+import multer from "multer";
+import crypto from "crypto";
+import path from "path";
 
 const register = asyncHandler(async (req, res) => {
   const { name, email, pin, password } = req.body;
@@ -82,9 +86,24 @@ const login = asyncHandler(async (req, res) => {
 
 const logout = asyncHandler(async (req, res) => {
   console.log("logout");
-  return res.clearCookie("auth_token")
-    .status(200)
-    .json({ success: true, message: "User logged out successfully" }).redirect("/");
+  res.clearCookie("auth_token");
+  return res.redirect("/");
+});
+
+
+
+const uploads = asyncHandler(async (req, res) => {
+  console.log(req.user);
+  console.log("bfskvbkearbferbvkjv");
+  console.log(req.file);
+  console.log(req.file.filename);
+  const user = await User.findOne({ email: req.user.email });
+  user.image = `/images/uploads/${req.file.filename}`;
+  console.log(user.image);
+  
+
+  await user.save();
+  res.status(200).json({ success: true, message: "Image uploaded successfully" });
 });
 
 const updateProfile = asyncHandler(async (req, res) => {
@@ -101,6 +120,7 @@ const updateProfile = asyncHandler(async (req, res) => {
   // console.log(user);
   res.status(200).json({ success: true, message: "Profile updated successfully" });
 });
+
 
 
 
@@ -189,4 +209,4 @@ const updatePassword = async (req, res) => {
 
 
 
-export { register, login, logout, getUserData, getAllUserData, updatePassword, isLoggedIn, updateProfile};
+export { register, login, logout, getUserData, getAllUserData, updatePassword, isLoggedIn, updateProfile, uploads };

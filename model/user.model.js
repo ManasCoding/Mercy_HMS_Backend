@@ -28,26 +28,23 @@ const userSchema = new Schema({
   },
   gender: { 
     type: String, 
-    required: true 
   },
   date: { 
     type: Date, 
-    required: true 
   },
   phone: { 
     type: Number, 
-    required: true 
   },
   address: { 
     type: String, 
-    required: true 
   },
-  profilePicture: {
+  image: {
         type: String,
     },
 },{
     timestamps: true
 })
+
 
 userSchema.methods.checkPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
