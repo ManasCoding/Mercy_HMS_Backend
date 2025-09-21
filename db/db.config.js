@@ -13,7 +13,7 @@ dotenv.config();
 
 
 const dbConnect = async () => {
-  const DB_URI = process.env.DB_URI;
+  const DB_URI = "mongodb+srv://Mithun824:Mithun%23824@cluster0.nk5aoal.mongodb.net/Mithun-hms?retryWrites=true&w=majority&appName=Cluster0"
 
   if (!DB_URI) {
     console.error("❌ DB_URI is undefined! Set it in .env (local) or Render environment variables.");
